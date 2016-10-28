@@ -165,7 +165,7 @@ void GameScene::addRevealedZoneView(Player *player, CardZone *zone, const QList<
 {
     ZoneViewWidget *item = new ZoneViewWidget(player, zone, -2, true, withWritePermission, cardList);
     zoneViews.append(item);
-        connect(item, SIGNAL(closePressed(ZoneViewWidget *)), this, SLOT(removeZoneView(ZoneViewWidget *)));
+    connect(item, SIGNAL(closePressed(ZoneViewWidget *)), this, SLOT(removeZoneView(ZoneViewWidget *)));
     addItem(item);
     item->setPos(600, 80);
 }

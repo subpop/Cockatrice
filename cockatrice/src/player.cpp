@@ -513,6 +513,7 @@ void Player::playerListActionTriggered()
     
     if (menu == mRevealLibrary) {
         cmd.set_zone_name("deck");
+        cmd.set_grant_write_access(true);
     } else if (menu == mRevealTopCard) {
         int decksize = zones.value("deck")->getCards().size();
         bool ok;

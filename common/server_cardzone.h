@@ -25,6 +25,7 @@
 #include <QMap>
 #include <QSet>
 #include "pb/serverinfo_zone.pb.h"
+#include "server_player.h"
 
 class Server_Card;
 class Server_Player;
@@ -75,6 +76,7 @@ public:
     const QSet<int> &getPlayersWithWritePermission() const { return playersWithWritePermission; }
     bool getAlwaysRevealTopCard() const { return alwaysRevealTopCard; }
     void setAlwaysRevealTopCard(bool _alwaysRevealTopCard) { alwaysRevealTopCard = _alwaysRevealTopCard; }
+    bool playerMayMoveCard(Server_Player&);
 };
 
 #endif

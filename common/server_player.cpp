@@ -907,8 +907,10 @@ Response::ResponseCode Server_Player::cmdMoveCard(const Command_MoveCard &cmd, R
     Server_CardZone *startZone = startPlayer->getZones().value(QString::fromStdString(cmd.start_zone()));
     if (!startZone)
         return Response::RespNameNotFound;
-        
-    if ((startPlayer != this) && (!startZone->getPlayersWithWritePermission().contains(playerId)))
+
+    bool playerIsPermittedToMoveCard =
+            (startPlayer == this) || (startZone->getPlayersWithWritePermission().contains(playerId));
+    if (!playerIsPermittedToMoveCard)
         return Response::RespContextError;
     
     Server_Player *targetPlayer = game->getPlayers().value(cmd.target_player_id());

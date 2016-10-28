@@ -296,3 +296,10 @@ void Server_CardZone::getInfo(ServerInfo_Zone *info, Server_Player *playerWhosAs
             cardIterator.next()->getInfo(info->add_card_list());
     }
 }
+
+bool Server_CardZone::playerMayMoveCard(Server_Player &player)
+{
+    return (&player == this->player) || playersWithWritePermission.contains(player.getPlayerId());
+}
+
+

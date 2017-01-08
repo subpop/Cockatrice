@@ -17,7 +17,7 @@
 #include "pb/serverinfo_game.pb.h"
 
 void GameCreator::sharedCtor() {
-    rememberGameSettings = new QCheckBox(tr("Re&member settings"));
+    rememberGameSettings = new QCheckBox(tr("Re&member"));
     descriptionLabel = new QLabel(tr("&Description:"));
     descriptionEdit = new QLineEdit;
     descriptionLabel->setBuddy(descriptionEdit);
@@ -75,8 +75,8 @@ void GameCreator::sharedCtor() {
     passwordEdit = new QLineEdit;
     passwordLabel->setBuddy(passwordEdit);
 
-    onlyBuddiesCheckBox = new QCheckBox(tr("Only &buddies can join"));
-    onlyRegisteredCheckBox = new QCheckBox(tr("Only &registered users can join"));
+    onlyBuddiesCheckBox = new QCheckBox(tr("Only &buddies"));
+    onlyRegisteredCheckBox = new QCheckBox(tr("Only &registered users"));
     if (room && room->getUserInfo()->user_level() & ServerInfo_User::IsRegistered) {
         onlyRegisteredCheckBox->setChecked(true);
     } else {
@@ -93,12 +93,12 @@ void GameCreator::sharedCtor() {
     QGroupBox *joinRestrictionsGroupBox = new QGroupBox(tr("Joining restrictions"));
     joinRestrictionsGroupBox->setLayout(joinRestrictionsLayout);
 
-    spectatorsAllowedCheckBox = new QCheckBox(tr("&Spectators can watch"));
+    spectatorsAllowedCheckBox = new QCheckBox(tr("&Can watch"));
     spectatorsAllowedCheckBox->setChecked(true);
     connect(spectatorsAllowedCheckBox, SIGNAL(stateChanged(int)), this, SLOT(spectatorsAllowedChanged(int)));
-    spectatorsNeedPasswordCheckBox = new QCheckBox(tr("Spectators &need a password to watch"));
-    spectatorsCanTalkCheckBox = new QCheckBox(tr("Spectators can &chat"));
-    spectatorsSeeEverythingCheckBox = new QCheckBox(tr("Spectators can see &hands"));
+    spectatorsNeedPasswordCheckBox = new QCheckBox(tr("Require password"));
+    spectatorsCanTalkCheckBox = new QCheckBox(tr("Can &chat"));
+    spectatorsSeeEverythingCheckBox = new QCheckBox(tr("Can see &hands"));
     QVBoxLayout *spectatorsLayout = new QVBoxLayout;
     spectatorsLayout->addWidget(spectatorsAllowedCheckBox);
     spectatorsLayout->addWidget(spectatorsNeedPasswordCheckBox);

@@ -40,15 +40,33 @@ void GameCreator::sharedCtor() {
     QGroupBox *generalGroupBox = new QGroupBox(tr("General"));
     generalGroupBox->setLayout(generalGrid);
 
-    QVBoxLayout *gameTypeLayout = new QVBoxLayout;
+    QGridLayout *gameTypeLayout = new QGridLayout;
     QMapIterator<int, QString> gameTypeIterator(gameTypes);
+
+    // split the games into 2 columns to save vertical space
+    // first find out half of the types
+    int half = 0;
+    if (gameTypes.size() % 2 == 1) {
+        half = (gameTypes.size() + 1) / 2;
+    } else {
+        half = gameTypes.size() / 2;
+    }
+
+    int yPos = 0;
+    int xPos = 0;
     while (gameTypeIterator.hasNext()) {
         gameTypeIterator.next();
         QRadioButton *gameTypeRadioButton = new QRadioButton(gameTypeIterator.value(), this);
-        gameTypeLayout->addWidget(gameTypeRadioButton);
+        gameTypeLayout->addWidget(gameTypeRadioButton, yPos++, xPos);
         gameTypeCheckBoxes.insert(gameTypeIterator.key(), gameTypeRadioButton);
         bool isChecked = settingsCache->getGameTypes().contains(gameTypeIterator.value() + ", ");
         gameTypeCheckBoxes[gameTypeIterator.key()]->setChecked(isChecked);
+
+        // start a new column when we have placed half
+        if (yPos == half) {
+            xPos += 1;
+            yPos = 0;
+        }
     }
     QGroupBox *gameTypeGroupBox = new QGroupBox(tr("Game type"));
     gameTypeGroupBox->setLayout(gameTypeLayout);

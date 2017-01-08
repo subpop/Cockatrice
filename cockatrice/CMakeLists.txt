@@ -63,6 +63,7 @@ SET(cockatrice_SOURCES
     src/dlg_settings.cpp 
     src/phasestoolbar.cpp 
     src/gamescene.cpp 
+    src/gamecreator.cpp
     src/arrowitem.cpp 
     src/arrowtarget.cpp 
     src/tab.cpp 
@@ -136,7 +137,7 @@ endif(WIN32)
 if(APPLE)
     set(MACOSX_BUNDLE_ICON_FILE appicon.icns)
     set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/resources/appicon.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    set(cockatrice_SOURCES ${cockatrice_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/resources/appicon.icns)
+    set(cockatrice_SOURCES ${cockatrice_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/resources/appicon.icns src/gamecreator.h src/gamecreator.cpp)
 ENDIF(APPLE)
 
 set(COCKATRICE_LIBS)

@@ -26,6 +26,7 @@ class Event_JoinRoom;
 class Event_LeaveRoom;
 class Event_RoomSay;
 class GameSelector;
+class GameCreator;
 class Response;
 class PendingCommand;
 class ServerInfo_User;
@@ -46,6 +47,7 @@ private:
     QLabel *sayLabel;
     LineEditCompleter *sayEdit;
     QGroupBox *chatGroupBox;
+    GameCreator *gameCreator;
     
     QMenu *roomMenu;
     QAction *aLeaveRoom;

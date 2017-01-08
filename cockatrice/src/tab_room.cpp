@@ -21,6 +21,7 @@
 #include "abstractclient.h"
 #include "chatview.h"
 #include "gameselector.h"
+#include "gamecreator.h"
 #include "settingscache.h"
 #include "main.h"
 #include "lineeditcompleter.h"
@@ -47,6 +48,8 @@ TabRoom::TabRoom(TabSupervisor *_tabSupervisor, AbstractClient *_client, ServerI
     gameSelector = new GameSelector(client, tabSupervisor, this, QMap<int, QString>(), tempMap, true, true);
     userList = new UserList(tabSupervisor, client, UserList::RoomList);
     connect(userList, SIGNAL(openMessageDialog(const QString &, bool)), this, SIGNAL(openMessageDialog(const QString &, bool)));
+
+    gameCreator = new GameCreator(this, gameTypes, this);
 
     chatView = new ChatView(tabSupervisor, 0, true);
     connect(chatView, SIGNAL(showMentionPopup(QString&)), this, SLOT(actShowMentionPopup(QString&)));
@@ -88,13 +91,17 @@ TabRoom::TabRoom(TabSupervisor *_tabSupervisor, AbstractClient *_client, ServerI
     chatGroupBox = new QGroupBox;
     chatGroupBox->setLayout(chatVbox);
 
-    QSplitter *splitter = new QSplitter(Qt::Vertical);
-    splitter->addWidget(gameSelector);
-    splitter->addWidget(chatGroupBox);
+    QSplitter *vSplitter = new QSplitter(Qt::Vertical);
+    vSplitter->addWidget(gameSelector);
+    vSplitter->addWidget(chatGroupBox);
+
+    QVBoxLayout *rightSide = new QVBoxLayout;
+    rightSide->addWidget(gameCreator, 1);
+    rightSide->addWidget(userList, 4);
 
     QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->addWidget(splitter, 3);
-    hbox->addWidget(userList, 1);
+    hbox->addWidget(vSplitter, 10);
+    hbox->addLayout(rightSide, 0);
 
     aLeaveRoom = new QAction(this);
     connect(aLeaveRoom, SIGNAL(triggered()), this, SLOT(actLeaveRoom()));
@@ -139,6 +146,7 @@ TabRoom::~TabRoom()
 void TabRoom::retranslateUi()
 {
     gameSelector->retranslateUi();
+    gameCreator->retranslateUi();
     chatView->retranslateUi();
     userList->retranslateUi();
     sayLabel->setText(tr("&Say:"));

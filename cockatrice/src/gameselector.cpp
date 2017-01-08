@@ -63,12 +63,6 @@ GameSelector::GameSelector(AbstractClient *_client, const TabSupervisor *_tabSup
     clearFilterButton->setIcon(QPixmap("theme:icons/clearsearch"));
     clearFilterButton->setEnabled(true);
     connect(clearFilterButton, SIGNAL(clicked()), this, SLOT(actClearFilter()));
-
-    if (room) {
-        createButton = new QPushButton;
-        connect(createButton, SIGNAL(clicked()), this, SLOT(actCreate()));
-    } else
-        createButton = 0;
     joinButton = new QPushButton;
     spectateButton = new QPushButton;
 
@@ -79,8 +73,6 @@ GameSelector::GameSelector(AbstractClient *_client, const TabSupervisor *_tabSup
         buttonLayout->addWidget(clearFilterButton);
     }
     buttonLayout->addStretch();
-    if (room)
-        buttonLayout->addWidget(createButton);
     buttonLayout->addWidget(joinButton);
     buttonLayout->addWidget(spectateButton);
     buttonLayout->setAlignment(Qt::AlignTop);
@@ -135,8 +127,6 @@ void GameSelector::actCreate()
 
 void GameSelector::checkResponse(const Response &response)
 {
-    if (createButton)
-        createButton->setEnabled(true);
     joinButton->setEnabled(true);
     spectateButton->setEnabled(true);
 
@@ -185,8 +175,6 @@ void GameSelector::actJoin()
     connect(pend, SIGNAL(finished(Response, CommandContainer, QVariant)), this, SLOT(checkResponse(Response)));
     r->sendRoomCommand(pend);
 
-    if (createButton)
-        createButton->setEnabled(false);
     joinButton->setEnabled(false);
     spectateButton->setEnabled(false);
 }
@@ -196,8 +184,6 @@ void GameSelector::retranslateUi()
     setTitle(tr("Games"));
     filterButton->setText(tr("&Filter games"));
     clearFilterButton->setText(tr("C&lear filter"));
-    if (createButton)
-        createButton->setText(tr("C&reate"));
     joinButton->setText(tr("&Join"));
     spectateButton->setText(tr("J&oin as spectator"));
 }

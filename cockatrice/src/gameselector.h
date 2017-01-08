@@ -33,7 +33,7 @@ private:
     QTreeView *gameListView;
     GamesModel *gameListModel;
     GamesProxyModel *gameListProxyModel;
-    QPushButton *filterButton, *clearFilterButton, *createButton, *joinButton, *spectateButton;
+    QPushButton *filterButton, *clearFilterButton, *joinButton, *spectateButton;
     GameTypeMap gameTypeMap;
 public:
     GameSelector(AbstractClient *_client, const TabSupervisor *_tabSupervisor, TabRoom *_room, const QMap<int, QString> &_rooms, const QMap<int, GameTypeMap> &_gameTypes, const bool restoresettings, const bool showfilters, QWidget *parent = 0);

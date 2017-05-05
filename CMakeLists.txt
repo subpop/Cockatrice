@@ -231,3 +231,12 @@ if(TEST)
     include(CTest)
     add_subdirectory(tests)
 endif()
+
+include(FindFlatpakKDESDK)
+
+add_custom_target(flatpak
+    COMMAND ${FLATPAK_BUILDER} --ccache --verbose --require-changes --force-clean --repo=cockatrice_flatpakrepo Cockatrice ${CMAKE_CURRENT_SOURCE_DIR}/io.github.Cockatrice.json
+    COMMAND ${FLATPAK_EXECUTABLE} build-update-repo cockatrice_flatpakrepo
+    BYPRODUCTS Cockatrice/ cockatrice_flatpakrepo
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/io.github.Cockatrice.json ${CMAKE_CURRENT_SOURCE_DIR}/io.github.Cockatrice.appdata.xml
+)

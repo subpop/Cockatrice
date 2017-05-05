@@ -1,0 +1,73 @@
+{
+	"id": "io.github.Cockatrice",
+	"branch": "master",
+	"runtime": "org.kde.Platform",
+	"runtime-version": "master",
+	"sdk": "org.kde.Sdk",
+	"command": "cockatrice",
+	"rename-desktop-file": "cockatrice.desktop",
+	"rename-icon": "cockatrice",
+	"copy-icon": true,
+	"desktop-file-name-prefix": "(Nightly) ",
+	"finish-args": [
+		"--share=ipc",
+		"--share=network",
+		"--socket=x11",
+		"--socket=wayland",
+		"--filesystem=home",
+		"--env=QT_QPA_PLATFORM=flatpak"
+	],
+	"cleanup": [
+		"protoc",
+		"*.la",
+		"*.a",
+		"/include",
+		"/lib/pkgconfig"
+	],
+	"modules": [
+		{
+			"name": "protobuf",
+			"sources": [
+				{
+					"type": "git",
+					"branch": "v3.2.0",
+					"url": "https://github.com/google/protobuf.git"
+				},
+				{
+					"type": "git",
+					"branch": "release-1.7.0",
+					"url": "https://github.com/google/googlemock.git",
+					"dest": "gmock"
+				},
+								{
+					"type": "git",
+					"branch": "release-1.7.0",
+					"url": "https://github.com/google/googletest.git",
+					"dest": "gmock/gtest"
+				}
+					
+			]
+		},
+		{
+			"name": "cockatrice",
+			"buildsystem": "cmake",
+			"config-opts": [
+				"-DBUILD_SHARED_LIBS:BOOL=OFF"
+			],
+			"sources": [
+				{
+					"type": "git",
+					"url": "."
+				},
+				{
+					"type": "file",
+					"path": "io.github.Cockatrice.appdata.xml"
+				}
+			],
+			"post-install": [
+				"mkdir -p /app/share/appdata",
+				"cp io.github.Cockatrice.appdata.xml /app/share/appdata/io.github.Cockatrice.appdata.xml"
+			]
+		}
+	]
+}
